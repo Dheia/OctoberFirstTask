@@ -1,0 +1,10 @@
+<a
+    data-control="popup"
+    data-size="huge"
+    data-handler="onRelationButtonUpdate"
+    data-request-data="manage_id: '<?= $relationManageId ?>'"
+    href="javascript:;"
+    class="btn btn-sm btn-secondary">
+        <i class="octo-icon-settings"></i>
+        <?= e(trans('backend::lang.relation.update_name', ['name'=>trans($relationLabel)])) ?>
+</a>
