@@ -94,7 +94,7 @@
   margin: 0;
   box-sizing: border-box;
   list-style: none;
-  border-bottom: 1px solid #D7E1EA;
+  border-bottom: 1px solid #d7e1eA;
   position: relative;
   white-space: nowrap;
 }
@@ -112,7 +112,7 @@
   margin-top: 6px;
 }
 .component-backend-uploader .uploader-body ul li.status-error .item-name {
-  color: #FF3E1D;
+  color: #ff3e1d;
 }
 .component-backend-uploader .uploader-body ul li.status-completed {
   padding-right: 50px;

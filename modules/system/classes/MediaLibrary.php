@@ -8,7 +8,7 @@ use Media\Classes\MediaLibrary as MediaMediaLibrary;
  *
  * @package october\system
  * @author Alexey Bobkov, Samuel Georges
- * @deprecated Use Media\Classes\MediaLibrary. Remove if year >= 2021.
+ * @deprecated Use Media\Classes\MediaLibrary. Remove if year >= 2023.
  */
 class MediaLibrary extends MediaMediaLibrary
 {

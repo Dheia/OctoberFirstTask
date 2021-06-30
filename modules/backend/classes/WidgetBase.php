@@ -5,7 +5,7 @@ use October\Rain\Extension\Extendable;
 use stdClass;
 
 /**
- * Widget base class.
+ * WidgetBase class
  *
  * @package october\backend
  * @author Alexey Bobkov, Samuel Georges
@@ -41,7 +41,7 @@ abstract class WidgetBase extends Extendable
     protected $defaultAlias = 'widget';
 
     /**
-     * Constructor
+     * __construct the widget
      * @param \Backend\Classes\Controller $controller
      * @param array $configuration Proactive configuration definition.
      */
@@ -170,40 +170,14 @@ abstract class WidgetBase extends Extendable
     }
 
     /**
-     * Safe accessor for configuration values.
+     * getConfig is a safe accessor for configuration values
      * @param string $name Config name, supports array names like "field[key]"
-     * @param string $default Default value if nothing is found
+     * @param mixed $default Default value if nothing is found
      * @return string
      */
-    public function getConfig($name, $default = null)
+    public function getConfig($name = null, $default = null)
     {
-        /*
-         * Array field name, eg: field[key][key2][key3]
-         */
-        $keyParts = HtmlHelper::nameToArray($name);
-
-        /*
-         * First part will be the field name, pop it off
-         */
-        $fieldName = array_shift($keyParts);
-        if (!isset($this->config->{$fieldName})) {
-            return $default;
-        }
-
-        $result = $this->config->{$fieldName};
-
-        /*
-         * Loop the remaining key parts and build a result
-         */
-        foreach ($keyParts as $key) {
-            if (!array_key_exists($key, $result)) {
-                return $default;
-            }
-
-            $result = $result[$key];
-        }
-
-        return $result;
+        return $this->getConfigValueFrom($this->config, $name, $default);
     }
 
     /**

@@ -1,11 +1,11 @@
 .component-backend-splitter > .splitter-handle {
-  background: #D7E1EA;
+  background: #d7e1eA;
   transition: background-color 0.1s;
   position: relative;
 }
 .component-backend-splitter > .splitter-handle:hover,
 .component-backend-splitter > .splitter-handle.dragging {
-  background-color: #6A6CF7;
+  background-color: #6a6cf7;
 }
 .component-backend-splitter > .splitter-handle:before,
 .component-backend-splitter > .splitter-handle:after {

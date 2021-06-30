@@ -6,7 +6,6 @@ use Event;
 use Config;
 use October\Rain\Halcyon\Model as HalcyonModel;
 use Cms\Contracts\CmsObject as CmsObjectContract;
-use ApplicationException;
 use ValidationException;
 use Exception;
 
@@ -102,7 +101,7 @@ class CmsObject extends HalcyonModel implements CmsObjectContract
     }
 
     /**
-     * Loads the object from a cache.
+     * loadCached loads the object from a cache
      * This method is used by the CMS in the runtime. If the cache is not found, it is created.
      * @param \Cms\Classes\Theme $theme Specifies the theme the object belongs to.
      * @param string $fileName Specifies the file name, with the extension.
@@ -111,14 +110,44 @@ class CmsObject extends HalcyonModel implements CmsObjectContract
     public static function loadCached($theme, $fileName)
     {
         try {
-            return static::inTheme($theme)
+            $cacheKey = static::makeInternalCacheKey($theme, $fileName);
+
+            if (ObjectMemoryCache::has($cacheKey)) {
+                return ObjectMemoryCache::get($cacheKey, new static);
+            }
+
+            $result = static::inTheme($theme)
                 ->remember(Config::get('cms.template_cache_ttl', 1440))
                 ->find($fileName)
             ;
+
+            ObjectMemoryCache::put($cacheKey, $result);
+
+            return $result;
         }
         catch (Exception $ex) {
             static::throwHalcyonException($ex);
         }
+    }
+
+    /**
+     * makeCacheKey makes a unique key for this object
+     */
+    protected static function makeInternalCacheKey($theme, string $fileName): string
+    {
+        $objRef = get_called_class();
+
+        $themeDir = is_string($theme) ? $theme : $theme->getDirName();
+
+        return "${objRef}.${themeDir}.${fileName}";
+    }
+
+    /**
+     * clearInternalCache clears the request-level object cache
+     */
+    public static function clearInternalCache()
+    {
+        ObjectMemoryCache::flush();
     }
 
     /**

@@ -13,7 +13,7 @@ use Media\FormWidgets\MediaFinder as MediaMediaFinder;
  *
  * @package october\cms
  * @author Alexey Bobkov, Samuel Georges
- * @deprecated Use Media\FormWidgets\MediaFinder. Remove if year >= 2020.
+ * @deprecated Use Media\FormWidgets\MediaFinder. Remove if year >= 2023.
  */
 class MediaFinder extends MediaMediaFinder
 {

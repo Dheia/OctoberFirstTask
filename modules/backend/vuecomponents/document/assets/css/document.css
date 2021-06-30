@@ -1,7 +1,7 @@
 .component-backend-document .document-header-container {
   opacity: 1;
   padding: 10px 20px;
-  border-bottom: 1px solid #D7E1EA;
+  border-bottom: 1px solid #d7e1eA;
 }
 .component-backend-document .document-header-container .document-header {
   position: relative;
@@ -96,7 +96,7 @@
 }
 html:not(.user-touch) .component-backend-document .document-header-container input.header-title:not([disabled]):hover,
 html:not(.user-touch) .component-backend-document .document-header-container input.header-subtitle:not([disabled]):hover {
-  border: 1px solid #D7E1EA;
+  border: 1px solid #d7e1eA;
 }
 .component-backend-document .document-content-container {
   background: white;
@@ -132,7 +132,7 @@ html:not(.user-touch) .component-backend-document .document-header-container inp
   padding: 6px 0 9px 0;
 }
 .component-backend-document .document-toolbar-container {
-  border-bottom: 1px solid #D7E1EA;
+  border-bottom: 1px solid #d7e1eA;
 }
 .component-backend-document .document-toolbar-container > div {
   font-size: 0;
@@ -167,7 +167,7 @@ html:not(.user-touch) .component-backend-document .document-header-container inp
   padding-right: 20px;
 }
 .component-backend-document .document-toolbar-element.element-type-separator {
-  border-right: 1px solid #D7E1EA;
+  border-right: 1px solid #d7e1eA;
   height: 25px;
   position: relative;
   top: 5px;
@@ -201,7 +201,7 @@ html:not(.user-touch) .component-backend-document .document-header-container inp
 .component-backend-document .document-toolbar-element .backend-toolbar-button.menu-trigger:before {
   content: '';
   display: block;
-  border-right: 1px solid #D7E1EA;
+  border-right: 1px solid #d7e1eA;
   height: 15px;
   position: absolute;
   top: 10px;

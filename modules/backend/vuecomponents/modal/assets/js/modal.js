@@ -195,26 +195,30 @@ Vue.component('backend-component-modal', {
             var that = this;
             Vue.nextTick(function() {
                 that.loadPosition();
+                $(that.$refs.container).addClass('in');
             });
 
             $(document.body).on('keydown', this.onKeyDown);
         },
 
         hide: function hide(byEscape) {
-            this.visible = false;
-            this.loadingPosition = true;
-            this.offset = {
-                left: 0,
-                top: 0
-            };
-
+            $(this.$refs.container).removeClass('in');
             $(document.body).off('keydown', this.onKeyDown);
 
             var that = this;
-            Vue.nextTick(function() {
-                $.oc.modalFocusManager.pop();
-                that.$emit('hidden', byEscape);
-            });
+            setTimeout(function() {
+                that.visible = false;
+                that.loadingPosition = true;
+                that.offset = {
+                    left: 0,
+                    top: 0
+                };
+
+                Vue.nextTick(function() {
+                    $.oc.modalFocusManager.pop();
+                    that.$emit('hidden', byEscape);
+                });
+            }, 300);
         },
 
         savePosition: function savePosition() {

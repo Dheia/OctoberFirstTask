@@ -28,7 +28,7 @@
   cursor: default;
 }
 .component-cms-object-component-list ul li:not(.unknown):hover {
-  background-color: #6A6CF7;
+  background-color: #6a6cf7;
 }
 .component-cms-object-component-list ul li:last-child {
   margin-right: 0;
@@ -37,7 +37,7 @@
   cursor: pointer;
 }
 .component-cms-object-component-list ul li.popover-highlight {
-  background-color: #6A6CF7;
+  background-color: #6a6cf7;
 }
 .component-cms-object-component-list ul li .component-header {
   position: relative;

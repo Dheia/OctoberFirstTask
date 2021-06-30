@@ -2,6 +2,7 @@
 
 use Db;
 use Lang;
+use Flash;
 use Request;
 use Form as FormHelper;
 use Backend\Classes\ControllerBehavior;
@@ -9,7 +10,7 @@ use October\Rain\Database\Model;
 use ApplicationException;
 
 /**
- * Uses a combination of lists and forms for managing Model relations.
+ * RelationController uses a combination of lists and forms for managing Model relations.
  *
  * This behavior is implemented in the controller like so:
  *
@@ -31,192 +32,225 @@ class RelationController extends ControllerBehavior
     use \Backend\Traits\FormModelSaver;
 
     /**
-     * @var const Postback parameter for the active relationship field.
+     * @var const PARAM_FIELD postback parameter for the active relationship field
      */
     const PARAM_FIELD = '_relation_field';
 
     /**
-     * @var const Postback parameter for the active management mode.
+     * @var const PARAM_MODE postback parameter for the active management mode
      */
     const PARAM_MODE = '_relation_mode';
 
     /**
-     * @var const Postback parameter for read only mode.
+     * @var const PARAM_EXTRA_CONFIG postback parameter for read only mode
      */
     const PARAM_EXTRA_CONFIG = '_relation_extra_config';
 
     /**
-     * @var Backend\Widgets\Search Reference to the search widget object.
+     * @var Backend\Widgets\Search searchWidget
      */
     protected $searchWidget;
 
     /**
-     * @var Backend\Widgets\Toolbar Reference to the toolbar widget object.
+     * @var Backend\Widgets\Toolbar toolbarWidget
      */
     protected $toolbarWidget;
 
     /**
-     * @var Backend\Classes\WidgetBase Reference to the widget used for viewing (list or form).
+     * @var Backend\Classes\WidgetBase viewWidget used for viewing (list or form)
      */
     protected $viewWidget;
 
     /**
-     * @var \Backend\Widgets\Filter Reference to the view filter widget.
+     * @var \Backend\Widgets\Filter viewFilterWidget
      */
     protected $viewFilterWidget;
 
     /**
-     * @var Backend\Classes\WidgetBase Reference to the widget used for relation management.
+     * @var Backend\Classes\WidgetBase manageWidget used for relation management
      */
     protected $manageWidget;
 
     /**
-     * @var \Backend\Widgets\Filter Reference to the manage filter widget.
+     * @var \Backend\Widgets\Filter manageFilterWidget
      */
     protected $manageFilterWidget;
 
     /**
-     * @var Backend\Classes\WidgetBase Reference to widget for relations with pivot data.
+     * @var Backend\Classes\WidgetBase pivotWidget for relations with pivot data
      */
     protected $pivotWidget;
 
     /**
-     * @inheritDoc
+     * @var array requiredProperties
      */
     protected $requiredProperties = ['relationConfig'];
 
     /**
-     * @var array Properties that must exist for each relationship definition.
+     * @var array requiredRelationProperties that must exist for each relationship definition
      */
     protected $requiredRelationProperties = ['label'];
 
     /**
-     * @var array Configuration values that must exist when applying the primary config file.
+     * @var array requiredConfig that must exist when applying the primary config file
      */
     protected $requiredConfig = [];
 
     /**
-     * @var array Visible actions in context of the controller
+     * @var array actions visible in context of the controller
      */
     protected $actions = [];
 
     /**
-     * @var array Original configuration values
+     * @var object originalConfig values
      */
     protected $originalConfig;
 
     /**
-     * @var array Config provided by the relationRender method
+     * @var array extraConfig provided by the relationRender method
      */
     protected $extraConfig;
 
     /**
-     * @var bool Has the behavior been initialized.
+     * @var bool initialized informs if everything is ready
      */
     protected $initialized = false;
 
     /**
-     * @var string Relationship type
+     * @var string relationType
      */
     public $relationType;
 
     /**
-     * @var string Relationship name
+     * @var string relationName
      */
     public $relationName;
 
     /**
-     * @var Model Relationship model
+     * @var Model relationModel
      */
     public $relationModel;
 
     /**
-     * @var Model Relationship object
+     * @var Model relationObject
      */
     public $relationObject;
 
     /**
-     * @var Model The parent model of the relationship.
+     * @var Model model used as parent of the relationship
      */
     protected $model;
 
     /**
-     * @var Model The relationship field as defined in the configuration.
+     * @var Model field for the relationship as defined in the configuration
      */
     protected $field;
 
     /**
-     * @var string A unique alias to pass to widgets.
+     * @var string alias is something unique to pass to widgets
      */
     protected $alias;
 
     /**
-     * @var array The set of buttons to display in view mode.
+     * @var array toolbarButtons to display in view mode.
      */
     protected $toolbarButtons;
 
     /**
-     * @var Model Reference to the model used for viewing (form only).
+     * @var Model viewModel is a reference to the model used for viewing (form only)
      */
     protected $viewModel;
 
     /**
-     * @var string Relation has many (multi) or has one (single).
+     * @var string viewMode if relation has many (multi) or has one (single)
      */
     protected $viewMode;
 
     /**
-     * @var string The title used for the manage popup.
+     * @var string manageTitle used for the manage popup
      */
     protected $manageTitle;
 
     /**
-     * @var string Management of relation as list, form, or pivot.
+     * @var string pivotTitle used for the pivot popup
+     */
+    protected $pivotTitle;
+
+    /**
+     * @var string manageMode of relation as list, form, or pivot
      */
     protected $manageMode;
 
     /**
-     * @var string Force a certain view mode.
+     * @var string forceViewMode
      */
     protected $forceViewMode;
 
     /**
-     * @var string Force a certain manage mode.
+     * @var string forceManageMode
      */
     protected $forceManageMode;
 
     /**
-     * @var string The target that triggered an AJAX event (button, list)
+     * @var string eventTarget that triggered an AJAX event (button, list)
      */
     protected $eventTarget;
 
     /**
-     * @var int Primary id of an existing relation record.
+     * @var int manageId is the primary id of an existing relation record
      */
     protected $manageId;
 
     /**
-     * @var int Foeign id of a selected pivot record.
+     * @var int foreignId of a selected pivot record
      */
     protected $foreignId;
 
     /**
-     * @var string Active session key, used for deferred bindings.
+     * @var string sessionKey used for deferred bindings
      */
     public $sessionKey;
 
     /**
-     * @var bool Disables the ability to add, update, delete or create relations.
+     * @var bool readOnly disables the ability to add, update, delete or create relations
      */
     public $readOnly = false;
 
     /**
-     * @var bool Defers all binding actions using a session key when it is available.
+     * @var bool deferredBinding defers all binding actions using a session key
      */
     public $deferredBinding = false;
 
     /**
-     * Behavior constructor
+     * @var array customMessages contains default messages that you can override
+     */
+    protected $customMessages = [
+        'buttonCreate' => 'backend::lang.relation.create_name',
+        'buttonUpdate' => 'backend::lang.relation.update_name',
+        'buttonAdd' => 'backend::lang.relation.add_name',
+        'buttonLink' => 'backend::lang.relation.link_name',
+        'buttonDelete' => 'backend::lang.relation.delete',
+        'buttonRemove' => 'backend::lang.relation.remove',
+        'buttonUnlink' => 'backend::lang.relation.unlink',
+        'confirmDelete' => 'backend::lang.relation.delete_confirm',
+        'confirmUnlink' => 'backend::lang.relation.unlink_confirm',
+        'titlePreviewForm' => 'backend::lang.relation.preview_name',
+        'titleCreateForm' => 'backend::lang.relation.create_name',
+        'titleUpdateForm' => 'backend::lang.relation.update_name',
+        'titleLinkForm' => 'backend::lang.relation.link_a_new',
+        'titleAddForm' => 'backend::lang.relation.add_a_new',
+        'titlePivotForm' => 'backend::lang.relation.related_data',
+        'flashCreate' => 'backend::lang.form.create_success',
+        'flashUpdate' => 'backend::lang.form.update_success',
+        'flashDelete' => 'backend::lang.form.delete_success',
+        'flashAdd' => 'backend::lang.relation.add_success',
+        'flashLink' => 'backend::lang.relation.link_success',
+        'flashRemove' => 'backend::lang.relation.remove_success',
+        'flashUnlink' => 'backend::lang.relation.unlink_success',
+    ];
+
+    /**
+     * __construct the behavior
      * @param Backend\Classes\Controller $controller
      */
     public function __construct($controller)
@@ -260,6 +294,7 @@ class RelationController extends ControllerBehavior
         $this->vars['relationManageId'] = $this->manageId;
         $this->vars['relationLabel'] = $this->config->label ?: $this->field;
         $this->vars['relationManageTitle'] = $this->manageTitle;
+        $this->vars['relationPivotTitle'] = $this->pivotTitle;
         $this->vars['relationField'] = $this->field;
         $this->vars['relationType'] = $this->relationType;
         $this->vars['relationSearchWidget'] = $this->searchWidget;
@@ -362,6 +397,7 @@ class RelationController extends ControllerBehavior
         $this->viewMode = $this->evalViewMode();
         $this->manageMode = $this->evalManageMode();
         $this->manageTitle = $this->evalManageTitle();
+        $this->pivotTitle = $this->evalPivotTitle();
         $this->toolbarButtons = $this->evalToolbarButtons();
 
         /*
@@ -559,6 +595,14 @@ class RelationController extends ControllerBehavior
         }
 
         return $this->sessionKey = FormHelper::getSessionKey();
+    }
+
+    /**
+     * relationGetMessage is a public API for accessing custom messages
+     */
+    public function relationGetMessage(string $code): string
+    {
+        return $this->getCustomLang($code);
     }
 
     //
@@ -1141,6 +1185,8 @@ class RelationController extends ControllerBehavior
             }
         }
 
+        $this->showFlashMessage('flashCreate');
+
         return $this->relationRefresh();
     }
 
@@ -1164,6 +1210,8 @@ class RelationController extends ControllerBehavior
             $this->viewWidget->setFormValues($saveData);
             $this->viewModel->save(null, $this->manageWidget->getSessionKey());
         }
+
+        $this->showFlashMessage('flashUpdate');
 
         return $this->relationRefresh();
     }
@@ -1202,6 +1250,8 @@ class RelationController extends ControllerBehavior
             $this->viewModel = $this->relationModel;
         }
 
+        $this->showFlashMessage('flashDelete');
+
         return $this->relationRefresh();
     }
 
@@ -1234,6 +1284,8 @@ class RelationController extends ControllerBehavior
                     $this->relationObject->add($model, $sessionKey);
                 }
             }
+
+            $this->showFlashMessage('flashAdd');
         }
         /*
          * Link
@@ -1254,6 +1306,8 @@ class RelationController extends ControllerBehavior
                     }
                 }
             }
+
+            $this->showFlashMessage('flashLink');
         }
 
         return $this->relationRefresh();
@@ -1284,6 +1338,8 @@ class RelationController extends ControllerBehavior
                     $this->relationObject->remove($model, $sessionKey);
                 }
             }
+
+            $this->showFlashMessage('flashRemove');
         }
         /*
          * Unlink
@@ -1303,6 +1359,8 @@ class RelationController extends ControllerBehavior
             }
 
             $this->resetViewWidgetModel();
+
+            $this->showFlashMessage('flashUnlink');
         }
 
         return $this->relationRefresh();
@@ -1354,6 +1412,8 @@ class RelationController extends ControllerBehavior
             }
         });
 
+        $this->showFlashMessage('flashAdd');
+
         return ['#'.$this->relationGetId('view') => $this->relationRenderView()];
     }
 
@@ -1369,6 +1429,8 @@ class RelationController extends ControllerBehavior
         foreach ($modelsToSave as $modelToSave) {
             $modelToSave->save(null, $this->pivotWidget->getSessionKey());
         }
+
+        $this->showFlashMessage('flashUpdate');
 
         return ['#'.$this->relationGetId('view') => $this->relationRenderView()];
     }
@@ -1511,7 +1573,7 @@ class RelationController extends ControllerBehavior
     }
 
     /**
-     * Determine the view mode based on the model relationship type.
+     * evalViewMode determines the view mode based on the model relationship type
      * @return string
      */
     protected function evalViewMode()
@@ -1536,10 +1598,9 @@ class RelationController extends ControllerBehavior
     }
 
     /**
-     * Determine the management mode popup title.
-     * @return string
+     * evalManageTitle determines the management mode popup title
      */
-    protected function evalManageTitle()
+    protected function evalManageTitle(): string
     {
         if ($customTitle = $this->getConfig('manage[title]')) {
             return $customTitle;
@@ -1549,25 +1610,38 @@ class RelationController extends ControllerBehavior
             case 'pivot':
             case 'list':
                 if ($this->eventTarget == 'button-link') {
-                    return 'backend::lang.relation.link_a_new';
-                }
-
-                return 'backend::lang.relation.add_a_new';
-            case 'form':
-                if ($this->readOnly) {
-                    return 'backend::lang.relation.preview_name';
-                }
-                elseif ($this->manageId) {
-                    return 'backend::lang.relation.update_name';
+                    return $this->getCustomLang('titleLinkForm');
                 }
                 else {
-                    return 'backend::lang.relation.create_name';
+                    return $this->getCustomLang('titleAddForm');
+                }
+            case 'form':
+                if ($this->readOnly) {
+                    return $this->getCustomLang('titlePreviewForm');
+                }
+                elseif ($this->manageId) {
+                    return $this->getCustomLang('titleUpdateForm');
+                }
+                else {
+                    return $this->getCustomLang('titleCreateForm');
                 }
         }
     }
 
     /**
-     * Determine the management mode based on the relation type and settings.
+     * evalPivotTitle determines the pivot mode popup title
+     */
+    protected function evalPivotTitle(): string
+    {
+        if ($customTitle = $this->getConfig('pivot[title]')) {
+            return $customTitle;
+        }
+
+        return $this->getCustomLang('titlePivotForm');
+    }
+
+    /**
+     * evalManageMode determines the management mode based on the relation type and settings
      * @return string
      */
     protected function evalManageMode()
@@ -1619,7 +1693,7 @@ class RelationController extends ControllerBehavior
     }
 
     /**
-     * Determine supplied form context.
+     * evalFormContext determines supplied form context
      */
     protected function evalFormContext($mode = 'manage', $exists = false)
     {
@@ -1639,7 +1713,7 @@ class RelationController extends ControllerBehavior
     }
 
     /**
-     * Apply extra configuration
+     * applyExtraConfig
      */
     protected function applyExtraConfig($config, $field = null)
     {
@@ -1668,8 +1742,8 @@ class RelationController extends ControllerBehavior
     }
 
     /**
-     * Returns the configuration for a mode (view, manage, pivot) for an
-     * expected type (list, form). Uses fallback configuration.
+     * makeConfigForMode returns the configuration for a mode (view, manage, pivot) for an
+     * expected type (list, form) and uses fallback configuration
      */
     protected function makeConfigForMode($mode = 'view', $type = 'list', $throwException = true)
     {
@@ -1711,10 +1785,8 @@ class RelationController extends ControllerBehavior
         return $this->makeConfig($config);
     }
 
-
     /**
-     * Reset the view widget model, internal method used when deleting
-     * singular relationships.
+     * resetViewWidgetModel is an internal method used when deleting singular relationships
      */
     protected function resetViewWidgetModel()
     {
@@ -1723,8 +1795,65 @@ class RelationController extends ControllerBehavior
     }
 
     /**
-     * Returns the manage widget used by this behavior.
-     *
+     * getCustomLang parses custom messages provided by the config
+     */
+    protected function getCustomLang(string $name, string $default = null, array $extras = []): string
+    {
+        $foundKey = $this->getConfig("customMessages[${name}]");
+
+        if ($foundKey === null) {
+            $foundKey = $this->originalConfig->customMessages[$name] ?? null;
+        }
+
+        if ($foundKey === null) {
+            $foundKey = $default;
+        }
+
+        if ($foundKey === null) {
+            $foundKey = $this->customMessages[$name] ?? '???';
+        }
+
+        $vars = $extras + [
+            'name' => Lang::get($this->getConfig('label', $this->field))
+        ];
+
+        return Lang::get($foundKey, $vars);
+    }
+
+    /**
+     * showFlashMessage displays a flash message if its found
+     */
+    protected function showFlashMessage(string $message): void
+    {
+        if (!$this->useFlashMessages()) {
+            return;
+        }
+
+        if ($message = $this->getCustomLang($message)) {
+            Flash::success($message);
+        }
+    }
+
+    /**
+     * useFlashMessages determines if flash messages should be used
+     */
+    protected function useFlashMessages(): bool
+    {
+        $useFlash = $this->getConfig('showFlash');
+
+        if ($useFlash === null) {
+            $useFlash = $this->originalConfig->showFlash ?? null;
+        }
+
+        if ($useFlash === null) {
+            $useFlash = true;
+        }
+
+        return $useFlash;
+    }
+
+    /**
+     * relationGetManageWidget returns the manage widget used by this behavior
      * @return \Backend\Classes\WidgetBase
      */
     public function relationGetManageWidget()
@@ -1733,8 +1862,7 @@ class RelationController extends ControllerBehavior
     }
 
     /**
-     * Returns the view widget used by this behavior.
-     *
+     * relationGetViewWidget returns the view widget used by this behavior
      * @return \Backend\Classes\WidgetBase
      */
     public function relationGetViewWidget()

@@ -5,7 +5,7 @@
 .component-backend-documentmarkdowneditor .EasyMDEContainer .editor-preview-side {
   background: white;
   border: none;
-  border-left: #D7E1EA 1px solid;
+  border-left: #d7e1eA 1px solid;
 }
 .component-backend-documentmarkdowneditor .EasyMDEContainer .CodeMirror {
   border: none;

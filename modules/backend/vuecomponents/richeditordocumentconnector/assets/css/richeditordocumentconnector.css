@@ -37,9 +37,9 @@
   min-height: 100%;
 }
 .component-backend-richeditor-document-connector .top-ruler {
-  background-color: #D7E1EA;
+  background-color: #d7e1eA;
   height: 14px;
-  border-bottom: #D7E1EA 1px solid;
+  border-bottom: #d7e1eA 1px solid;
 }
 .component-backend-richeditor-document-connector .top-ruler .width-indicator {
   height: 13px;
@@ -77,7 +77,7 @@
   cursor: ew-resize;
 }
 .component-backend-richeditor-document-connector.resizing-ui .fr-box.fr-basic .fr-wrapper {
-  background-color: #ECF0F1;
+  background-color: #f0f4f8;
 }
 .component-backend-richeditor-document-connector.resizing-ui .fr-element.fr-view {
   background: white;
@@ -180,7 +180,7 @@ body.richeditor-document-connector-resizing * {
   border-radius: 4px;
 }
 .field-richeditor.vue-mode .editor-write.editor-focus {
-  border: 1px solid #72809D;
+  border: 1px solid #72809d;
 }
 .field-richeditor.vue-mode.size-tiny .editor-write {
   min-height: 50px;

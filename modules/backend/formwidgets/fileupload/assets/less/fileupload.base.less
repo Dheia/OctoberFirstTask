@@ -46,6 +46,12 @@
             margin-top: 0;
         }
 
+        &.upload-object-image {
+            h4.filename {
+                padding-top: 10px;
+            }
+        }
+
         .file-data-container {
             padding: 3px;
             border-radius: @border-radius-base;
@@ -53,7 +59,7 @@
             &:hover {
                 background: @background-color-focus;
             }
-            
+
             .file-data-container-inner {
                 position: relative;
             }
@@ -162,7 +168,7 @@
         .file-data-container-inner {
             cursor: pointer;
         }
-        
+
         .icon-container {
             opacity: 1;
             > img, > i {
@@ -212,7 +218,6 @@
 
     &.is-preview {
         .upload-button,
-        .upload-remove-button,
         a.drag-handle {
             display: none !important;
         }

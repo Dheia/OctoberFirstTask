@@ -7,7 +7,7 @@ use Media\Widgets\MediaManager as MediaMediaManager;
  *
  * @package october\cms
  * @author Alexey Bobkov, Samuel Georges
- * @deprecated Use Media\Widgets\MediaManager. Remove if year >= 2020.
+ * @deprecated Use Media\Widgets\MediaManager. Remove if year >= 2023.
  */
 class MediaManager extends MediaMediaManager
 {

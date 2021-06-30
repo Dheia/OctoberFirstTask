@@ -42,17 +42,17 @@ class ListController extends ControllerBehavior
     protected $listConfig = [];
 
     /**
-     * @var \Backend\Classes\WidgetBase Reference to the list widget object.
+     * @var \Backend\Classes\WidgetBase[] Reference to the list widget object.
      */
     protected $listWidgets = [];
 
     /**
-     * @var \Backend\Classes\WidgetBase Reference to the toolbar widget objects.
+     * @var \Backend\Classes\WidgetBase[] Reference to the toolbar widget objects.
      */
     protected $toolbarWidgets = [];
 
     /**
-     * @var \Backend\Classes\WidgetBase Reference to the filter widget objects.
+     * @var \Backend\Classes\WidgetBase[] Reference to the filter widget objects.
      */
     protected $filterWidgets = [];
 
@@ -368,8 +368,6 @@ class ListController extends ControllerBehavior
         if (!$definition || !isset($this->listDefinitions[$definition])) {
             $definition = $this->primaryDefinition;
         }
-
-        $listConfig = $this->controller->listGetConfig($definition);
 
         $vars = [
             'toolbar' => null,

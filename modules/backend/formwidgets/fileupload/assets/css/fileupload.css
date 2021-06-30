@@ -25,6 +25,9 @@
   font-weight: 500;
   margin-top: 0;
 }
+.field-fileupload .upload-object.upload-object-image h4.filename {
+  padding-top: 10px;
+}
 .field-fileupload .upload-object .file-data-container {
   padding: 3px;
   border-radius: 4px;
@@ -135,7 +138,6 @@
   display: none;
 }
 .field-fileupload.is-preview .upload-button,
-.field-fileupload.is-preview .upload-remove-button,
 .field-fileupload.is-preview a.drag-handle {
   display: none !important;
 }

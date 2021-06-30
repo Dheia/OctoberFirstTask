@@ -39,6 +39,7 @@
                     data-path="<?= $file->pathUrl ?>"
                     data-thumb="<?= $file->thumbUrl ?>"
                     data-name="<?= e($file->title ?: $file->file_name) ?>"
+                    data-description="<?= e($file->description) ?>"
                     data-size="<?= e($file->file_size) ?>"
                     data-accepted="true"
                 ></div>

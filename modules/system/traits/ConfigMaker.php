@@ -4,14 +4,13 @@ use Yaml;
 use File;
 use Lang;
 use Event;
-use Cache;
 use Config;
 use stdClass;
 use SystemException;
+use October\Rain\Html\Helper as HtmlHelper;
 
 /**
- * Config Maker Trait
- * Adds configuration based methods to a class
+ * ConfigMaker trait adds configuration based methods to a class
  *
  * @package october\system
  * @author Alexey Bobkov, Samuel Georges
@@ -25,7 +24,7 @@ trait ConfigMaker
 
     /**
      * Reads the contents of the supplied file and applies it to this object.
-     * @param array $configFile
+     * @param mixed $configFile
      * @param array $requiredConfig
      * @return object
      */
@@ -208,5 +207,46 @@ trait ConfigMaker
         $configB = $this->makeConfig($configB);
 
         return (object) array_merge((array) $configA, (array) $configB);
+    }
+
+    /**
+     * getConfigValueFrom will apply the config getter convention
+     */
+    protected function getConfigValueFrom(object $configObj, string $name = null, $default = null)
+    {
+        /*
+         * Return all config
+         */
+        if ($name === null) {
+            return $configObj;
+        }
+
+        /*
+         * Array field name, eg: field[key][key2][key3]
+         */
+        $keyParts = HtmlHelper::nameToArray($name);
+
+        /*
+         * First part will be the field name, pop it off
+         */
+        $fieldName = array_shift($keyParts);
+        if (!isset($configObj->{$fieldName})) {
+            return $default;
+        }
+
+        $result = $configObj->{$fieldName};
+
+        /*
+         * Loop the remaining key parts and build a result
+         */
+        foreach ($keyParts as $key) {
+            if (!is_array($result) || !array_key_exists($key, $result)) {
+                return $default;
+            }
+
+            $result = $result[$key];
+        }
+
+        return $result;
     }
 }

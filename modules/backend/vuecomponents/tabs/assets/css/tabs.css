@@ -36,7 +36,7 @@
 }
 .component-backend-tabs > .tablist-container .tablist button:focus {
   outline: none;
-  color: #6A6CF7;
+  color: #6a6cf7;
 }
 .component-backend-tabs > .tablist-container .tablist button:focus span.tab-icon:not(.tab-error) {
   box-shadow: 0 0 0px 2px rgba(0,0,0,0.15);
@@ -119,13 +119,13 @@
   outline: none;
 }
 .component-backend-tabs.style-form > .tablist-container .tablist button {
-  border: 1px solid #D7E1EA;
+  border: 1px solid #d7e1eA;
   margin-left: -1px;
   height: 38px;
 }
 .component-backend-tabs.style-form > .tablist-container .tablist button.active {
   color: #2C3E4F;
-  border-color: #6A6CF7;
+  border-color: #6a6cf7;
   font-weight: 500;
   z-index: 1;
 }
@@ -141,18 +141,18 @@
   border-radius: 0 6px 6px 0;
 }
 .component-backend-tabs.style-document > .tablist-container .tabs-scrollable {
-  background-color: #E9EDF3;
+  background-color: #e9edf3;
 }
 .component-backend-tabs.style-document > .tablist-container .tabs-toolbar {
   line-height: 39px;
-  background-color: #E9EDF3;
+  background-color: #e9edf3;
 }
 .component-backend-tabs.style-document > .tablist-container .tabs-toolbar:after {
   content: '';
   height: 100%;
   width: 1px;
   top: 0;
-  background: #D7E1EA;
+  background: #d7e1eA;
   position: absolute;
   margin-left: -1px;
 }
@@ -166,7 +166,7 @@
   left: 0;
   width: 100%;
   bottom: 0;
-  background-color: #D7E1EA;
+  background-color: #d7e1eA;
   z-index: 0;
 }
 .component-backend-tabs.style-document > .tablist-container .tablist:empty:after {
@@ -174,7 +174,7 @@
 }
 .component-backend-tabs.style-document > .tablist-container .tablist button {
   height: 48px;
-  border-left: 1px solid #D7E1EA;
+  border-left: 1px solid #d7e1eA;
   max-width: 220px;
   min-width: 120px;
 }
@@ -196,7 +196,7 @@
   margin-left: 25px;
 }
 .component-backend-tabs.style-document > .tablist-container .tablist button:last-child {
-  border-right: 1px solid #D7E1EA;
+  border-right: 1px solid #d7e1eA;
 }
 .component-backend-tabs.style-document > .tablist-container .tablist-scrollable-container {
   position: relative;
@@ -257,7 +257,7 @@
   left: 0;
   width: 100%;
   bottom: 0;
-  background-color: #D7E1EA;
+  background-color: #d7e1eA;
   z-index: 0;
 }
 .component-backend-tabs.style-inspector > .tablist-container .tablist button {
@@ -270,7 +270,7 @@
   padding: 0 0 4px;
 }
 .component-backend-tabs.style-inspector > .tablist-container .tablist button.active {
-  color: #6A6CF7;
+  color: #6a6cf7;
 }
 .component-backend-tabs.style-inspector > .tablist-container .tablist button.active:after {
   position: absolute;
@@ -280,7 +280,7 @@
   width: 100%;
   bottom: 0;
   z-index: 1;
-  background-color: #6A6CF7;
+  background-color: #6a6cf7;
 }
 .component-backend-tabs.style-inspector > .tablist-container .tablist button:first-child {
   margin-left: 0;

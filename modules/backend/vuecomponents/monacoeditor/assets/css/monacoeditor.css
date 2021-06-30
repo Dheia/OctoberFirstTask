@@ -39,7 +39,7 @@
 }
 .component-backend-monaco-editor .monaco-menu .action-menu-item:hover {
   color: white !important;
-  background: #6A6CF7 !important;
+  background: #6a6cf7 !important;
 }
 .component-backend-monaco-editor .monaco-icon-label > .monaco-icon-label-container > .monaco-icon-name-container > .label-name {
   text-decoration: none !important;

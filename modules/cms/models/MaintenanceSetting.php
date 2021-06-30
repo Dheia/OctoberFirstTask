@@ -49,7 +49,7 @@ class MaintenanceSetting extends Model
 
     public function getCmsPageOptions()
     {
-        if (!$theme = Theme::getEditTheme()) {
+        if (!$theme = Theme::getActiveTheme()) {
             throw new ApplicationException('Unable to find the active theme.');
         }
 

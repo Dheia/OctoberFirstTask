@@ -161,14 +161,4 @@ class MailTemplate extends Model
 
         return $template;
     }
-
-    /**
-     * @deprecated see System\Classes\MailManager::registerCallback
-     * Remove if year >= 2019
-     */
-    public static function registerCallback(callable $callback)
-    {
-        traceLog('MailTemplate::registerCallback is deprecated, use ' . MailManager::class . '::registerCallback instead');
-        MailManager::instance()->registerCallback($callback);
-    }
 }

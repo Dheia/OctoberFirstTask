@@ -319,7 +319,7 @@
             options.automaticLayout = true;
 
             options.minimap = {
-                enabled: false
+                enabled: true
             };
 
             require(['vs/editor/editor.main'], function () {

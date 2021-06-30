@@ -16,7 +16,7 @@
         <?php $index = 0; foreach ($tabs as $name => $fields): ?>
         <?php
             $isActive = $index++ === 0;
-            $isLazy = !$isActive && in_array($name, $tabs->lazy);
+            $isLazy = !$isActive && $tabs->isLazy($name);
         ?>
             <li class="<?= $isActive ? 'active' : '' ?> <?= $isLazy ? 'tab-lazy' : '' ?>">
                 <a
@@ -41,7 +41,7 @@
     <?php $index = 0; foreach ($tabs as $name => $fields): ?>
         <?php
             $isActive = $index++ === 0;
-            $isLazy = !$isActive && in_array($name, $tabs->lazy);
+            $isLazy = !$isActive && $tabs->isLazy($name);
         ?>
             <div
                 class="tab-pane <?= $isLazy ? 'is-lazy' : '' ?> <?= e($tabs->getPaneCssClass($index, $name)) ?> <?= $isActive ? 'active' : '' ?> <?= $paneCss ?>"

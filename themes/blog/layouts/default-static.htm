@@ -1,0 +1,85 @@
+description = "Default static layout"
+
+[staticPage]
+useContent = 1
+default = 1
+==
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Caffe - {{ this.page.title }}</title>
+    <meta name="title" content="{{ this.page.meta_title }}">
+    <meta name="description" content="{{ this.page.meta_description }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Sotiris Kastanas">
+    <meta name="generator" content="OctoberCMS">
+    <link rel="icon" type="image/png" href="{{ 'assets/images/logo.png'|theme }}">
+    {% styles %}
+    <link href="{{'assets/css/style.css' |theme }}" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+        <script src="{{ [
+            'assets/js/html5shiv.js',
+        ]|theme }}"></script>
+    <![endif]-->
+</head>
+<body class="page-{{ this.page.id }} layout-{{ this.layout.id }}">
+
+<!-- Header -->
+<header id="layout-header" class="header-navbar">
+    <!-- Nav -->
+<!--    {% partial 'menu-items' items=topMenuLeft.menuItems class='mr-auto' %}-->
+</header>
+
+<!-- Content -->
+<div id="layout-content">
+    {% page %}
+</div>
+
+<!-- Mailing List -->
+<section id="layout-subscribe" class="subscribe-form">
+    {% partial "subscribe" %}
+</section>
+
+<!-- Footer -->
+
+    {% partial "footer" %}
+
+
+<!-- Scripts -->
+<script src="{{ [
+            'assets/js/camera.js',
+            'assets/js/device.js',
+            'assets/js/jquery.cookie.js',
+            'assets/js/easing.1.3.js',
+            'assets/js/equalheights.js',
+            'assets/js/jquery.fancybox.js',
+            'assets/js/jquery.fancybox-buttons.js',
+            'assets/js/jquery.fancybox-media.js',
+            'assets/js/jquery.js',
+            'assets/js/jquery.mobile.customized.min.js',
+            'assets/js/jquery.mobilemenu.js',
+            'assets/js/jquery.mousewheel.min.js',
+            'assets/js/jquery.rd-google-map.js',
+            'assets/js/jquery.rd-parallax.js',
+            'assets/js/jquery.simplr.smoothscroll.min.js',
+            'assets/js/jquery.ui.totop.js',
+            'assets/js/jquery.unveil.js',
+            'assets/js/jquery-migrate-1.2.1.js',
+            'assets/js/modal.js',
+            'assets/js/superfish.js',
+            'assets/js/TMForm.js',
+            'assets/js/tmstickup.js',
+            'assets/js/wow.js',
+            'assets/js/script.js',
+        ]|theme }}"></script>
+<script>
+    videojs.options.flash.swf = "{{ 'assets/vendor/flat-ui/js/video-js.swf'|theme }}";
+</script>
+{% framework extras %}
+{% scripts %}
+
+</body>
+</html>

@@ -22,7 +22,7 @@ class DbSystemFiles extends Migration
             $table->integer('sort_order')->nullable();
             $table->timestamps();
 
-            $table->index(['attachment_id', 'attachment_type'], 'master_index');
+            $table->index(['attachment_id', 'attachment_type'], 'system_files_master_index');
         });
     }
 

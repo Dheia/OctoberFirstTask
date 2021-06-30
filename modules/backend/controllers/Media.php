@@ -8,7 +8,7 @@ use Media\Controllers\Index as MediaController;
  *
  * @package october\backend
  * @author Alexey Bobkov, Samuel Georges
- * @deprecated Use Media\Controllers\Index. Remove if year >= 2021.
+ * @deprecated Use Media\Controllers\Index. Remove if year >= 2023.
  */
 class Media extends MediaController
 {

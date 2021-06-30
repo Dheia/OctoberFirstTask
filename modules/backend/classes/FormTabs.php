@@ -2,7 +2,6 @@
 
 use IteratorAggregate;
 use ArrayIterator;
-use ArrayAccess;
 
 /**
  * FormTabs is a translation of the form field tab configuration
@@ -10,21 +9,20 @@ use ArrayAccess;
  * @package october\backend
  * @author Alexey Bobkov, Samuel Georges
  */
-class FormTabs implements IteratorAggregate, ArrayAccess
+class FormTabs implements IteratorAggregate
 {
     const SECTION_OUTSIDE = 'outside';
     const SECTION_PRIMARY = 'primary';
     const SECTION_SECONDARY = 'secondary';
 
+    //
+    // Configurable properties
+    //
+
     /**
      * @var string section specifies the form section these tabs belong to
      */
     public $section = 'outside';
-
-    /**
-     * @var array fields is a collection of panes fields to these tabs
-     */
-    public $fields = [];
 
     /**
      * @var array lazy is the n Names of tabs to lazy load
@@ -65,6 +63,15 @@ class FormTabs implements IteratorAggregate, ArrayAccess
      * @var bool linkable means tab gets url fragment to be linkable
      */
     public $linkable = true;
+
+    //
+    // Object properties
+    //
+
+    /**
+     * @var array fields is a collection of panes fields to these tabs
+     */
+    protected $fields = [];
 
     /**
      * __construct specifies a tabs rendering section. Supported sections are:
@@ -119,42 +126,34 @@ class FormTabs implements IteratorAggregate, ArrayAccess
     }
 
     /**
+     * isLazy checks if a tab should be lazy loaded
+     */
+    public function isLazy($tabName): bool
+    {
+        return in_array($tabName, $this->lazy);
+    }
+
+    /**
      * addField to the collection of tabs
      * @param string    $name
      * @param FormField $field
      * @param string    $tab
      */
-    public function addField($name, FormField $field, $tab = null)
+    public function addField($name, FormField $field)
     {
-        if (!$tab) {
-            $tab = $this->defaultTab;
-        }
-
-        $this->fields[$tab][$name] = $field;
+        $this->fields[$name] = $field;
     }
 
     /**
      * removeField from all tabs by name
-     * @param string    $name
+     * @param string $name
      * @return boolean
      */
     public function removeField($name)
     {
-        foreach ($this->fields as $tab => $fields) {
-            foreach ($fields as $fieldName => $field) {
-                if ($fieldName === $name) {
-                    unset($this->fields[$tab][$fieldName]);
-
-                    /*
-                     * Remove empty tabs from collection
-                     */
-                    if (!count($this->fields[$tab])) {
-                        unset($this->fields[$tab]);
-                    }
-
-                    return true;
-                }
-            }
+        if (isset($this->fields[$name])) {
+            unset($this->fields[$name]);
+            return true;
         }
 
         return false;
@@ -162,7 +161,7 @@ class FormTabs implements IteratorAggregate, ArrayAccess
 
     /**
      * hasFields returns true if any fields have been registered for these tabs
-     * @return boolean
+     * @return bool
      */
     public function hasFields()
     {
@@ -170,12 +169,20 @@ class FormTabs implements IteratorAggregate, ArrayAccess
     }
 
     /**
-     * getFields returns an array of the registered fields, including tabs
+     * getFields returns an array of the registered fields, includes tabs in format
+     * array[tab][field]
      * @return array
      */
     public function getFields()
     {
-        return $this->fields;
+        $fieldsTabbed = [];
+
+        foreach ($this->fields as $name => $field) {
+            $tabName = $field->tab ?: $this->defaultTab;
+            $fieldsTabbed[$tabName][$name] = $field;
+        }
+
+        return $fieldsTabbed;
     }
 
     /**
@@ -184,13 +191,7 @@ class FormTabs implements IteratorAggregate, ArrayAccess
      */
     public function getAllFields()
     {
-        $tablessFields = [];
-
-        foreach ($this->getFields() as $tab) {
-            $tablessFields += $tab;
-        }
-
-        return $tablessFields;
+        return $this->fields;
     }
 
     /**
@@ -237,37 +238,5 @@ class FormTabs implements IteratorAggregate, ArrayAccess
                 ? $this->getAllFields()
                 : $this->getFields()
         );
-    }
-
-    /**
-     * offsetSet is an ArrayAccess implementation
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->fields[$offset] = $value;
-    }
-
-    /**
-     * offsetExists is an ArrayAccess implementation
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->fields[$offset]);
-    }
-
-    /**
-     * offsetUnset is an ArrayAccess implementation
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->fields[$offset]);
-    }
-
-    /**
-     * offsetGet is an ArrayAccess implementation
-     */
-    public function offsetGet($offset)
-    {
-        return $this->fields[$offset] ?? null;
     }
 }

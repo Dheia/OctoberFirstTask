@@ -37,7 +37,7 @@ class Cms
     }
 
     /**
-     * @deprecated Remove if year >= 2021
+     * @deprecated Remove if year >= 2023
      */
     public static function safeModeEnabled()
     {

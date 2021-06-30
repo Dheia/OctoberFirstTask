@@ -17,11 +17,11 @@ html .ace_editor.ace_autocomplete {
   line-height: 150%;
 }
 html .ace_editor.ace_autocomplete .ace_completion-highlight {
-  color: #6A6CF7;
+  color: #6a6cf7;
   font-weight: bold;
 }
 html .ace_editor.ace_autocomplete .ace_marker-layer .ace_active-line {
-  background-color: #6A6CF7;
+  background-color: #6a6cf7;
   opacity: 0.4;
 }
 html .ace_editor.ace_autocomplete .ace_marker-layer .ace_line-hover {
@@ -82,7 +82,7 @@ html .ace_tooltip.ace_doc-tooltip a {
 }
 html .ace_marker-layer .ace_link_marker {
   position: absolute;
-  border-bottom: 1px solid #6A6CF7;
+  border-bottom: 1px solid #6a6cf7;
   border-radius: 0;
   cursor: pointer;
   pointer-events: auto;

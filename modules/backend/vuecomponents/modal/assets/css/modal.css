@@ -56,6 +56,23 @@
     right: 0;
   }
 }
+.modal.component-backend-modal.fade:not(.in) {
+  pointer-events: none;
+}
+.modal.component-backend-modal.fade .modal-dialog {
+  opacity: 0;
+  -webkit-transition: all 0.15s, width 0s;
+  transition: all 0.15s, width 0s;
+  -webkit-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
+}
+.modal.component-backend-modal.fade.in .modal-dialog {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
 .modal.component-backend-modal {
   display: block;
 }

@@ -77,7 +77,6 @@ table.table.data {
 
         tr th:first-child {
             padding-left: 7px;
-            border-left: 3px solid transparent;
         }
 
         tr th:last-child a {
@@ -163,9 +162,10 @@ table.table.data {
             background: @color-list-hover-bg;
             color: @color-list-hover-text;
 
-            a:not(.btn), span, i[class^="icon-"] {
-               color: @color-list-hover-text;
-            }
+            // When hover is white, this targets common objects
+            // a:not(.btn), span, i[class^="icon-"] {
+            //    color: @color-list-hover-text;
+            // }
         }
 
         tr.rowlink:not(.nolink):active td {
@@ -386,7 +386,7 @@ table.table.data {
     }
 
     tbody tr td.list-checkbox {
-        padding-left: (@padding-standard); // Offset the border
+        padding-left: (@padding-standard - 3); // Offset stripe border
         padding-right: (@padding-standard - 17); // Offset the checkbox padding
     }
 

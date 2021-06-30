@@ -1,7 +1,7 @@
 <?php namespace System\Console;
 
 use Illuminate\Console\Command;
-use October\Rain\Process\Composer as ComposerProcess;
+use System\Classes\UpdateManager;
 use Exception;
 
 /**
@@ -34,34 +34,32 @@ class OctoberUpdate extends Command
         $this->comment("Executing: composer update");
         $this->output->newLine();
 
-        // Composer update via local library
+        // Composer update
+        $errCode = null;
+        passthru('composer update', $errCode);
+
+        if ($errCode !== 0) {
+            $this->output->error('Update failed. Check output above');
+            exit(1);
+        }
+
+        $this->comment("Executing: php artisan october:migrate");
+        $this->output->newLine();
+
+        // Migrate database
+        $errCode = null;
+        passthru('php artisan october:migrate', $errCode);
+
+        if ($errCode !== 0) {
+            $this->output->error('Migration failed. Check output above');
+            exit(1);
+        }
+
         try {
-            $composer = new ComposerProcess;
-            $composer->setCallback(function($message) { echo $message; });
-            $composer->update();
-
-            if ($composer->lastExitCode() !== 0) {
-                $this->output->error('Update failed. Check output above');
-                exit(1);
-            }
+            $this->output->success(sprintf('System Updated to v%s', UpdateManager::instance()->getCurrentVersion()));
         }
-        // Composer update via console
         catch (Exception $ex) {
-            $errCode = null;
-            passthru('composer update', $errCode);
-
-            if ($errCode !== 0) {
-                $this->output->error('Update failed. Check output above');
-                exit(1);
-            }
+            // ...
         }
-
-        $this->output->success('System updated');
-
-        // Run migrations
-        $this->comment('Please migrate the database with the following command');
-        $this->output->newLine();
-        $this->line("* php artisan october:migrate");
-        $this->output->newLine();
     }
 }

@@ -61,13 +61,6 @@
 
         this.$el.on('change', 'input[data-record-selector]', this.proxy(this.onSelectionChanged));
 
-        // Stop here for preview mode
-        if (this.options.isPreview) {
-            return;
-        }
-
-        this.$el.on('click', '.upload-remove-button', this.proxy(this.onRemoveObject));
-
         this.bindUploader();
 
         if (this.options.isSortable) {
@@ -78,7 +71,6 @@
     FileUpload.prototype.dispose = function() {
         this.$el.off('click', '.upload-object.is-success .file-data-container-inner', this.proxy(this.onClickSuccessObject));
         this.$el.off('click', '.upload-object.is-error', this.proxy(this.onClickErrorObject));
-        this.$el.off('click', '.upload-remove-button', this.proxy(this.onRemoveObject));
         this.$el.off('click', '.toolbar-clear-file', this.proxy(this.onClearFileClick));
         this.$el.off('click', '.toolbar-delete-selected', this.proxy(this.onDeleteSelectedClick));
 
@@ -195,6 +187,8 @@
             self.dropzone.emit('addedfile', file);
             self.dropzone.emit('success', file, file);
 
+            $('[data-description]', file.previewElement).text(file.description);
+
             $(this).remove();
         });
 
@@ -271,7 +265,6 @@
         if (response.id) {
             $preview.data('id', response.id);
             $preview.data('path', response.path);
-            $('.upload-remove-button', $preview).data('request-data', { file_id: response.id });
             $img.attr('src', response.thumb);
         }
 
@@ -378,26 +371,6 @@
     //
     // User interaction
     //
-
-    FileUpload.prototype.onRemoveObject = function(ev) {
-        var self = this,
-            $object = $(ev.target).closest('.upload-object')
-
-        $(ev.target)
-            .closest('.upload-remove-button')
-            .one('ajaxPromise', function(){
-                $object.addClass('is-loading')
-            })
-            .one('ajaxDone', function(){
-                self.removeFileFromElement($object)
-                self.evalIsPopulated()
-                self.updateDeleteSelectedState()
-                self.triggerChange()
-            })
-            .request();
-
-        ev.stopPropagation();
-    }
 
     FileUpload.prototype.onClearFileClick = function (ev) {
         var self = this,

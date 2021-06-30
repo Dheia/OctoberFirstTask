@@ -135,7 +135,7 @@ trait OctoberUtilPatches
                 });
 
                 Schema::table('system_files', function($table) {
-                    $table->index(['attachment_id', 'attachment_type'], 'master_index');
+                    $table->index(['attachment_id', 'attachment_type'], 'system_files_master_index');
                 });
             });
         }

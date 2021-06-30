@@ -81,6 +81,27 @@ These modifiers can be added in addition to the `control-tabs` class:
         </div>
     </div>
 
+### Auxiliary tabs
+
+    <div class="control-tabs auxiliary-tabs" data-control="tab">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#primaryTabOne">One</a></li>
+            <li><a href="#primaryTabTwo">Two</a></li>
+            <li><a href="#primaryTabThree">Three</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active">
+                Tab one content
+            </div>
+            <div class="tab-pane">
+                Tab two content
+            </div>
+            <div class="tab-pane">
+                Tab three content
+            </div>
+        </div>
+    </div>
+
 ### Pill tabs
 
     <div class="control-tabs pill-tabs" data-control="tab">

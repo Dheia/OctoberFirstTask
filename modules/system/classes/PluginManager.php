@@ -784,7 +784,7 @@ class PluginManager
 
     /**
      * @deprecated Plugins are now sorted by default. See getPlugins()
-     * Remove if year >= 2022
+     * Remove if year >= 2023
      */
     public function sortByDependencies($plugins = null)
     {

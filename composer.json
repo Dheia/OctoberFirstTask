@@ -12,7 +12,10 @@
         "october/backend": "^2.0",
         "october/cms": "^2.0",
         "october/media": "^2.0",
-        "october/editor": "^2.0"
+        "october/editor": "^2.0",
+        "rainlab/builder-plugin": "^1.0",
+        "responsiv/flat-theme": "^1.1",
+        "rainlab/pages-plugin": "^1.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0|^9.0",

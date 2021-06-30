@@ -7,6 +7,7 @@ use View;
 use Lang;
 use Flash;
 use Config;
+use System;
 use Session;
 use Request;
 use Response;
@@ -584,10 +585,8 @@ class Controller
      */
     protected function initTwigEnvironment()
     {
-        $this->loader = new TwigLoader;
-
         $useCache = !Config::get('cms.enable_twig_cache', true);
-        $isDebugMode = Config::get('app.debug', false);
+        $isDebugMode = System::checkDebugMode();
         $strictVariables = Config::get('cms.enable_twig_strict_variables', false);
         $strictVariables = $strictVariables ?? $isDebugMode;
         $forceBytecode = Config::get('cms.force_bytecode_invalidation', false);
@@ -605,14 +604,18 @@ class Controller
             );
         }
 
-        $this->twig = new TwigEnvironment($this->loader, $options);
-        $this->twig->addExtension(new CmsTwigExtension($this));
-        $this->twig->addExtension(new SystemTwigExtension);
-        $this->twig->addExtension(new SandboxExtension(new SecurityPolicy, true));
+        $loader = new TwigLoader;
+        $twig = new TwigEnvironment($loader, $options);
+        $twig->addExtension(new CmsTwigExtension($this));
+        $twig->addExtension(new SystemTwigExtension);
+        $twig->addExtension(new SandboxExtension(new SecurityPolicy, true));
 
         if ($isDebugMode) {
-            $this->twig->addExtension(new DebugExtension($this));
+            $twig->addExtension(new DebugExtension($this));
         }
+
+        $this->loader = $loader;
+        $this->twig = $twig;
     }
 
     /**
