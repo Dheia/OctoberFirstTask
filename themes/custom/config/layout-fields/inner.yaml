@@ -1,0 +1,13 @@
+fields:
+    title: settings
+    label: I dont know
+    tab: Settigns
+tab:
+    rightImageLeftContent:
+        title:
+            label: title
+            type: text
+            span: right
+        image:
+            label: Image
+            type: image
