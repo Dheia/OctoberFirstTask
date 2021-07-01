@@ -15,7 +15,8 @@
         "october/editor": "^2.0",
         "rainlab/builder-plugin": "^1.0",
         "responsiv/flat-theme": "^1.1",
-        "rainlab/pages-plugin": "^1.4"
+        "rainlab/pages-plugin": "^1.4",
+        "rainlab/translate-plugin": "^1.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0|^9.0",
