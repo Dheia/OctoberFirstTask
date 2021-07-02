@@ -1,13 +1,46 @@
-fields:
-    title: settings
-    label: I dont know
-    tab: Settigns
-tab:
-    rightImageLeftContent:
+title:
+    name: Titre
+    description: Champs texte
+    icon: icon-header
+    tab: about
+    fields:
+        tab:
         title:
-            label: title
+            label: Titre principal
             type: text
+
+subtitle:
+    name: Sous-titre
+    description: Champs texte
+    icon: icon-italic
+    fields:
+        subtitle:
+            label: "Sous-titre (phrase d'accroche)"
+            type: text
+content:
+    name: Contenu textuel
+    description: Textarea
+    icon: icon-paragraph
+    fields:
+        text_area:
+            label: "Contenu"
+            type: richeditor
+            toolbarButtons: bold|italic|underline|strikeThrough|subscript|superscript|fontFamily|fontSize|color|emoticons|inlineStyle|paragraphStyle|paragraphFormat|align|formatOL|formatUL|outdent|indent|quote|insertHR|insertLink|insertTable|undo|redo|clearFormatting|selectAll|html|fullscreen
+            size: huge
+            span: full
+        text_area_position:
+            label: "Position du contenu sur la page"
+            type: radio
+            span: left
+            default: none
+            options:
+                none: [Aucune, Le contenu prendra toute la largeur de la page.]
+                left: [Aligné à gauche, Le contenu sera placé à gauche des autres éléments.]
+                right: [Aligné à droite, Le contenu sera placé à droite des autres éléments.]
+        text_area_image:
+            label: "Affiche une image liée"
+            commentAbove: "Si vous souhaitez ajouté une image à ce contenu, merci de l'ajouter ici"
+            type: mediafinder
+            mode: image
             span: right
-        image:
-            label: Image
-            type: image
+            imageWidth: 40%

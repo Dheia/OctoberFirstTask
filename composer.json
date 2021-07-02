@@ -16,7 +16,8 @@
         "rainlab/builder-plugin": "^1.0",
         "responsiv/flat-theme": "^1.1",
         "rainlab/pages-plugin": "^1.4",
-        "rainlab/translate-plugin": "^1.9"
+        "rainlab/translate-plugin": "^1.9",
+        "pikanji/agent-plugin": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0|^9.0",
